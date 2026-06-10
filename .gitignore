@@ -1,4 +1,5 @@
 *.class
 *.ctxt
 *.swp
-
+*.bluej
+..gitignore.un~
