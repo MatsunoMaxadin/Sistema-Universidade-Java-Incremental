@@ -7,13 +7,12 @@
  */
  
  import java.util.ArrayList;
-public class Estudante
+public class Estudante extends Usuario
 {
     
-    private Usuario usuario;
-    private String nome;
+   
+    
     private String CPF;
-    private String telefone;
     private Responsavel responsavel;
     private String comprovanteMatricula;
     private String numeroMatricula;
@@ -23,14 +22,10 @@ public class Estudante
     private ArrayList<Contrato> contratosImoveis = new ArrayList<>();
     private ArrayList<InteresseImovel> interesses = new ArrayList<>();
     
-    
-    
-    public Estudante(Usuario usuario, String nome, String CPF,String telefone, Responsavel responsavel, String numeroMatricula, String comprovanteMatricula,
+    public Estudante(String nomeCompleto, String dataNascimento, String celular, String email, String senha, String CPF, Responsavel responsavel, String numeroMatricula, String comprovanteMatricula,
                      String universidade, int idade, String descricaoPessoal) {
-        this.usuario = usuario;
-        this.nome = nome;
+        super(nomeCompleto, dataNascimento, celular, email, senha);
         this.CPF = CPF;
-        this.telefone = telefone;
         this.responsavel = responsavel;
         this.numeroMatricula = numeroMatricula;
         this.comprovanteMatricula = comprovanteMatricula;
@@ -38,21 +33,9 @@ public class Estudante
         this.idade = idade;
         this.descricaoPessoal = descricaoPessoal;
     }
-
-    public Usuario getUsuario() {
-        return this.usuario;
-    }
-    
-    public String getNome(){
-        return this.nome;
-    }
     
     public String getCPF(){
         return this.CPF;
-    }
-    
-    public String getTelefone(){
-        return this.telefone;
     }
     
     public Responsavel getResponsavel(){
@@ -95,6 +78,14 @@ public class Estudante
         return this.contratosImoveis.get(indice);
     }
     
+    public ArrayList<Contrato> getContratos(){
+        return this.contratosImoveis;
+    }
+    
+    public void adicionarContrato(Contrato contrato){
+        this.contratosImoveis.add(contrato);
+    }
+
     public ArrayList<InteresseImovel> getInteresse(){
         return this.interesses;
     }
@@ -148,10 +139,10 @@ public void verEstudantesInteressadosPorEndereco(String enderecoBusca){
         }
     }
     public String toString() {
-    return String.format(
-        "Nome: %s, CPF: %s, Telefone: %s, Idade: %d, Universidade: %s, Descrição Pessoal: %s",
-        this.nome, this.CPF, this.telefone, this.idade, this.universidade, this.descricaoPessoal
-    );
-}
+        return String.format(
+            "Nome: %s, CPF: %s, Telefone: %s, Idade: %d, Universidade: %s, Descrição Pessoal: %s",
+            getNomeCompleto(), this.CPF, getCelular(), this.idade, this.universidade, this.descricaoPessoal
+        );
+    }
 
 }

@@ -58,8 +58,45 @@ String tipoAcomodacao = entrada.lerTipoAcomodacao();
 int qtdDeQuartos = entrada.lerQtdDeQuartos();
 String categoria = entrada.lerCategoria();
 String ID = entrada.lerID();
+float valorMaximoAluguel = entrada.lerFloat("Valor máximo do aluguel: ");
+float IPTU = 0.0f;
+float taxaCondominio = 0.0f;
 
-imovel = new Imovel(proprietario, enderecoCompleto, fotos, descricaoCompleta, tipoAcomodacao, qtdDeQuartos, categoria, ID);
+switch (categoria) {
+    case "A":
+        imovel = new ImovelPadraoEssencial(proprietario, enderecoCompleto, fotos, descricaoCompleta, tipoAcomodacao, qtdDeQuartos, ID, valorMaximoAluguel);
+        break;
+    case "B":
+        IPTU = entrada.lerFloat("Valor do IPTU: ");
+        imovel = new ImovelPadraoUrbano(proprietario, enderecoCompleto, fotos, descricaoCompleta, tipoAcomodacao, qtdDeQuartos, ID, valorMaximoAluguel, IPTU);
+        break;
+    case "C":
+        taxaCondominio = entrada.lerFloat("Valor do condomínio: ");
+        imovel = new ImovelPadraoColetivo(proprietario, enderecoCompleto, fotos, descricaoCompleta, tipoAcomodacao, qtdDeQuartos, ID, valorMaximoAluguel, taxaCondominio);
+        break;
+    case "D":
+        IPTU = entrada.lerFloat("Valor do IPTU: ");
+        taxaCondominio = entrada.lerFloat("Valor do condomínio: ");
+        imovel = new ImovelConforto1(proprietario, enderecoCompleto, fotos, descricaoCompleta, tipoAcomodacao, qtdDeQuartos, ID, valorMaximoAluguel, IPTU, taxaCondominio);
+        break;
+    case "E":
+        IPTU = entrada.lerFloat("Valor do IPTU: ");
+        taxaCondominio = entrada.lerFloat("Valor do condomínio: ");
+        imovel = new ImovelConfortoPlus(proprietario, enderecoCompleto, fotos, descricaoCompleta, tipoAcomodacao, qtdDeQuartos, ID, valorMaximoAluguel, IPTU, taxaCondominio);
+        break;
+    case "F":
+        IPTU = entrada.lerFloat("Valor do IPTU: ");
+        taxaCondominio = entrada.lerFloat("Valor do condomínio: ");
+        imovel = new ImovelPremium(proprietario, enderecoCompleto, fotos, descricaoCompleta, tipoAcomodacao, qtdDeQuartos, ID, valorMaximoAluguel, IPTU, taxaCondominio);
+        break;
+    case "G":
+        IPTU = entrada.lerFloat("Valor do IPTU: ");
+        taxaCondominio = entrada.lerFloat("Valor do condomínio: ");
+        imovel = new ImovelMaster(proprietario, enderecoCompleto, fotos, descricaoCompleta, tipoAcomodacao, qtdDeQuartos, ID, valorMaximoAluguel, IPTU, taxaCondominio);
+        break;
+    default:
+        break;
+}
 } return imovel;
 
 }

@@ -35,6 +35,17 @@ public class EntradaDados{
 	   return numero;
 	}
 
+	public float lerFloat(String mensagem){
+	    float valor;
+        while scanner.hasNextFloat() == false {
+            System.out.println("Erro: valor inválido. Digite um número.");
+            scanner.nextLine();
+        }
+        valor = scanner.nextFloat();
+	    scanner.nextLine();
+	    return valor;
+	}
+
 	public String lerNomeCompleto(){
 		System.out.print("Nome completo: ");
 		String nome = lerString();

@@ -5,25 +5,16 @@
  * @author (Pedro da Paz) 
  * @version (05042026 01)
  */
-public class Responsavel
+public class Responsavel extends Usuario
 {
    
-    private Usuario usuario;
     private Estudante estudanteVinculado;
     private String comprovanteResidencia;
 
-    public Responsavel(Usuario usuario, Estudante estudanteVinculado, String comprovanteResidencia) {
-        this.usuario = usuario;
+    public Responsavel(String nomeCompleto, String dataNascimento, String celular, String email, String senha, Estudante estudanteVinculado, String comprovanteResidencia) {
+        super(nomeCompleto, dataNascimento, celular, email, senha);
         this.estudanteVinculado = estudanteVinculado;
         this.comprovanteResidencia = comprovanteResidencia;
-    }
-
-    public Usuario getUsuario() {
-        return this.usuario;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
     }
 
     public Estudante getEstudanteVinculado() {

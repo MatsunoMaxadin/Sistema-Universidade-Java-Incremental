@@ -5,7 +5,7 @@
  * @author (Pedro da Paz) 
  * @version (05042026 01)
  */
-public class Usuario
+public abstract class Usuario
 {
     
     private String nomeCompleto;

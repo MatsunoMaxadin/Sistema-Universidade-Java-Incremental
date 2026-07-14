@@ -7,8 +7,12 @@
  */
  
  import java.util.ArrayList;
-public class Imovel
+public abstract class Imovel
 {
+    private static final String STATUS_DISPONIVEL = "Disponível";
+    private static final String STATUS_ALUGADO = "Alugado";
+    private static final String STATUS_MANUTENCAO = "Manutenção";
+    private static final String STATUS_INDISPONIVEL = "Indisponível";
     
     private Proprietario proprietario;
     private String enderecoCompleto;
@@ -20,30 +24,61 @@ public class Imovel
     private Estudante estudante;
     private Responsavel responsavel;
     private Avaliacao avaliacoes;
-    private String categoria;
     private String status;
     private String ID;
+    private float valorFinalAluguel;
+    private float valorMaximoAluguel;
+    private float fatorMultiplicador;
+    
     private ArrayList<InteresseImovel> interesses = new ArrayList<>();
 
 
-    public Imovel(Proprietario proprietario, String enderecoCompleto, String fotos,
-                  String descricaoCompleta, String tipoAcomodacao,int qtdDeQuartos, String categoria, String ID) {
+    public Imovel(Proprietario proprietario, String enderecoCompleto, String fotos, String descricaoCompleta, String tipoAcomodacao, int qtdDeQuartos, String ID, float valorMaximoAluguel, float fatorMultiplicador) {
         this.proprietario = proprietario;
         this.enderecoCompleto = enderecoCompleto;
         this.fotos = fotos;
         this.descricaoCompleta = descricaoCompleta;
         this.qtdDeQuartos = qtdDeQuartos;
         this.tipoAcomodacao = tipoAcomodacao;
-        this.categoria = categoria;
-        this.status = "Disponível";
+        this.status = STATUS_DISPONIVEL;
         this.ID = ID;
+        this.valorMaximoAluguel = valorMaximoAluguel;
+        this.fatorMultiplicador = fatorMultiplicador;
+        this.valorFinalAluguel = 0.0f;
     }
     
     public void setEstudante(Estudante estudante){
         this.estudante = estudante;
-        this.responsavel = estudante.getResponsavel();
-    
+        if (estudante != null) {
+            this.responsavel = estudante.getResponsavel();
+        } else {
+            this.responsavel = null;
+        }
     }
+
+    public boolean isDisponivel() {
+        return this.status.equals(STATUS_DISPONIVEL);
+    }
+
+    public void alugar(Estudante estudante) {
+        if (isDisponivel()) {
+            setEstudante(estudante);
+            this.status = STATUS_ALUGADO;
+        }
+    }
+    
+    public void desalugar(){
+        if(!this.isDisponivel()){
+            this.estudante = null;
+            this.responsavel = null;
+            this.status = STATUS_DISPONIVEL;
+        }
+    }
+
+    public void adicionarInteresse(InteresseImovel interesse) {
+        this.interesses.add(interesse);
+    }
+    
     public Proprietario getProprietario() {
         return this.proprietario;
     }
@@ -81,24 +116,30 @@ public class Imovel
         return this.avaliacoes;
     }
 
-    public String getCategoria(){
-        return this.categoria;
-    }
-    
     public String getStatus(){
         return this.status;
     }
     
-    public void setStatus(String status){
-        this.status = status;
+    public void setFinalAluguel(int diasAlocacao){
+        setValorFinalAluguel(this.valorMaximoAluguel * this.fatorMultiplicador * diasAlocacao);
     }
-    
-    public void finalizarContrato(){
-        this.status = "Disponível";
-        this.estudante = null;
-        this.responsavel = null;
+
+    public float getValorFinalAluguel(){
+        return this.valorFinalAluguel;
     }
-    
+
+    public void setValorFinalAluguel(float valorFinalAluguel) {
+        this.valorFinalAluguel = valorFinalAluguel;
+    }
+
+    public float getValorMaximoAluguel(){
+        return this.valorMaximoAluguel;
+    }
+
+    public float getFatorMultiplicador(){
+        return this.fatorMultiplicador;
+    }
+
     public String getID(){
         return this.ID;
     }
@@ -108,10 +149,11 @@ public class Imovel
     }
     
     public String toString() {
-    return String.format(
-        "Endereço completo: %s, Tipo de acomodação: %s",
-        this.enderecoCompleto, this.tipoAcomodacao
-    );
-}
+        return String.format(
+            "ID: %s | Endereço completo: %s | Tipo de acomodação: %s | Fator: %.1f | Status: %s",
+            this.ID, this.enderecoCompleto, this.tipoAcomodacao, this.fatorMultiplicador, this.status
+        );
+    }
+    
 
 }
